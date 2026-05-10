@@ -29,6 +29,14 @@ public class DonacionClient {
         );
     }
 
+    // MÉTODO AGREGADO: Para buscar donaciones de un usuario específico
+    public Object listarPorUsuario(Long id) {
+        return restTemplate.getForObject(
+                donacionesUrl + "/api/donaciones/usuario/" + id,
+                Object.class
+        );
+    }
+
     public Object obtener(Long id) {
         return restTemplate.getForObject(
                 donacionesUrl + "/api/donaciones/" + id,

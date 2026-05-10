@@ -14,6 +14,8 @@ public class DonacionFacade {
     private final UsuarioClient usuarioClient;
     private final DonacionClient donacionClient;
 
+    // --- MÉTODOS DE USUARIOS ---
+
     @CircuitBreaker(name = "ms-usuarios", fallbackMethod = "fallbackUsuarios")
     public Object login(Object dto) {
         return usuarioClient.login(dto);
@@ -34,6 +36,8 @@ public class DonacionFacade {
         return usuarioClient.actualizar(id, dto);
     }
 
+    // --- MÉTODOS DE DONACIONES ---
+
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object crearDonacion(Object dto) {
         return donacionClient.crearDonacion(dto);
@@ -42,6 +46,12 @@ public class DonacionFacade {
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object listarDonaciones() {
         return donacionClient.listar();
+    }
+
+    // NUEVO: Método para obtener donaciones filtradas por ID de usuario
+    @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
+    public Object listarDonacionesPorUsuario(Long id) {
+        return donacionClient.listarPorUsuario(id);
     }
 
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
@@ -54,11 +64,13 @@ public class DonacionFacade {
         return donacionClient.listarCentros();
     }
 
+    // --- MÉTODOS FALLBACK (Resiliencia) ---
+
     public Object fallbackUsuarios(Exception e) {
-        return new ErrorResponseDTO(true, "Servicio usuarios no disponible", 503);
+        return new ErrorResponseDTO(true, "Servicio usuarios no disponible temporalmente", 503);
     }
 
     public Object fallbackDonaciones(Exception e) {
-        return new ErrorResponseDTO(true, "Servicio donaciones no disponible", 503);
+        return new ErrorResponseDTO(true, "Servicio de donaciones no disponible temporalmente", 503);
     }
 }
