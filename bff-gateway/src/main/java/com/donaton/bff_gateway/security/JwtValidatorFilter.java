@@ -23,9 +23,10 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
 
         if (
                 path.contains("/gateway/usuarios/login") ||
-                        path.contains("/gateway/usuarios/registro")
+                        path.contains("/gateway/usuarios/registro") ||
+                        path.contains("/gateway/centros") ||
+                        path.contains("/gateway/donaciones")
         ) {
-
             filterChain.doFilter(request, response);
             return;
         }
@@ -36,18 +37,17 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
                 authHeader == null ||
                         !authHeader.startsWith("Bearer ")
         ) {
-
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
             response.getWriter().write("""
-        {
-          "error": true,
-          "mensaje": "Token no proporcionado o formato inválido",
-          "codigo": 401
-        }
-        """);
+                    {
+                      "error": true,
+                      "mensaje": "Token no proporcionado o formato inválido",
+                      "codigo": 401
+                    }
+                    """);
 
             return;
         }

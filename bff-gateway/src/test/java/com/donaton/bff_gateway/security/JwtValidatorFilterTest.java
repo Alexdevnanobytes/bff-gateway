@@ -28,8 +28,7 @@ class JwtValidatorFilterTest {
     @Test
     void debeBloquearRutaProtegidaSinToken() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setRequestURI("/gateway/donaciones");
-
+        request.setRequestURI("/gateway/admin");
         MockHttpServletResponse response = new MockHttpServletResponse();
         FilterChain chain = mock(FilterChain.class);
 
