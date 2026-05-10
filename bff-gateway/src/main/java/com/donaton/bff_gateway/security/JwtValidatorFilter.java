@@ -38,8 +38,16 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
         ) {
 
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
 
-            response.getWriter().write("Token no proporcionado");
+            response.getWriter().write("""
+        {
+          "error": true,
+          "mensaje": "Token no proporcionado o formato inválido",
+          "codigo": 401
+        }
+        """);
 
             return;
         }
