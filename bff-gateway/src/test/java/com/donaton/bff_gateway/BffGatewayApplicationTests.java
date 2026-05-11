@@ -1,13 +1,17 @@
 package com.donaton.bff_gateway;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+@SpringBootTest
 class BffGatewayApplicationTests {
 
     @Test
     void contextoCargaCorrectamente() {
-        assertTrue(true);
+    }
+
+    @Test
+    void mainEjecutaAplicacion() {
+        BffGatewayApplication.main(new String[]{});
     }
 }
