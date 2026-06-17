@@ -31,6 +31,27 @@ class UsuarioClientTest {
     }
 
     @Test
+    void debeRegistrarUsuario() {
+        RestTemplate restTemplate = mock(RestTemplate.class);
+        UsuarioClient client = new UsuarioClient(restTemplate);
+
+        ReflectionTestUtils.setField(client, "usuariosUrl", "http://localhost:8081");
+
+        Object dto = new Object();
+        Object respuesta = new Object();
+
+        when(restTemplate.postForObject(
+                "http://localhost:8081/api/usuarios/registro",
+                dto,
+                Object.class
+        )).thenReturn(respuesta);
+
+        Object resultado = client.registrar(dto);
+
+        assertSame(respuesta, resultado);
+    }
+
+    @Test
     void debeObtenerUsuarioPorId() {
         RestTemplate restTemplate = mock(RestTemplate.class);
         UsuarioClient client = new UsuarioClient(restTemplate);
