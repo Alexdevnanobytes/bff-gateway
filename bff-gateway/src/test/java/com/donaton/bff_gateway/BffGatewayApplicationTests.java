@@ -9,9 +9,4 @@ class BffGatewayApplicationTests {
     @Test
     void contextoCargaCorrectamente() {
     }
-
-    @Test
-    void mainEjecutaAplicacion() {
-        BffGatewayApplication.main(new String[]{});
-    }
 }

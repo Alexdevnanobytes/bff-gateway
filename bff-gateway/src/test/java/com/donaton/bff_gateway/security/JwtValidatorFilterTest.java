@@ -26,6 +26,45 @@ class JwtValidatorFilterTest {
     }
 
     @Test
+    void debePermitirRegistroSinToken() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRequestURI("/gateway/usuarios/registro");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    void debePermitirCentrosSinToken() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRequestURI("/gateway/centros");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    void debePermitirNecesidadesSinToken() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRequestURI("/gateway/necesidades");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
     void debeBloquearRutaProtegidaSinToken() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRequestURI("/gateway/admin");
@@ -35,8 +74,39 @@ class JwtValidatorFilterTest {
         filter.doFilter(request, response, chain);
 
         assertEquals(401, response.getStatus());
+        assertTrue(response.getContentType().startsWith("application/json"));
+        assertEquals("UTF-8", response.getCharacterEncoding());
         assertTrue(response.getContentAsString().contains("Token no proporcionado"));
         verify(chain, never()).doFilter(request, response);
+    }
+
+    @Test
+    void debeBloquearRutaProtegidaConFormatoDeTokenInvalido() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRequestURI("/gateway/admin");
+        request.addHeader("Authorization", "Basic abc");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+
+        assertEquals(401, response.getStatus());
+        verify(chain, never()).doFilter(request, response);
+    }
+
+    @Test
+    void debePermitirRutaProtegidaConBearerValido() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRequestURI("/gateway/admin");
+        request.addHeader("Authorization", "Bearer token-falso-para-prueba");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        FilterChain chain = mock(FilterChain.class);
+
+        filter.doFilter(request, response, chain);
+
+        verify(chain, times(1)).doFilter(request, response);
     }
 
     @Test

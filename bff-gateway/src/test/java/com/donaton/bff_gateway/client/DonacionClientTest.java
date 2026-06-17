@@ -69,6 +69,25 @@ class DonacionClientTest {
     }
 
     @Test
+    void debeListarDonacionesPorUsuario() {
+        RestTemplate restTemplate = mock(RestTemplate.class);
+        DonacionClient client = new DonacionClient(restTemplate);
+
+        ReflectionTestUtils.setField(client, "donacionesUrl", "http://localhost:8082");
+
+        Object respuesta = new Object();
+
+        when(restTemplate.getForObject(
+                "http://localhost:8082/api/donaciones/usuario/12",
+                Object.class
+        )).thenReturn(respuesta);
+
+        Object resultado = client.listarPorUsuario(12L);
+
+        assertSame(respuesta, resultado);
+    }
+
+    @Test
     void debeListarCentros() {
         RestTemplate restTemplate = mock(RestTemplate.class);
         DonacionClient client = new DonacionClient(restTemplate);
