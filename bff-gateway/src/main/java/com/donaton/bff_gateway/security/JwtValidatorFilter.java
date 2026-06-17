@@ -25,7 +25,8 @@ public class JwtValidatorFilter extends OncePerRequestFilter {
                 path.contains("/gateway/usuarios/login") ||
                         path.contains("/gateway/usuarios/registro") ||
                         path.contains("/gateway/centros") ||
-                        path.contains("/gateway/donaciones")
+                        path.contains("/gateway/donaciones") ||
+                        path.contains("/gateway/necesidades")
         ) {
             filterChain.doFilter(request, response);
             return;

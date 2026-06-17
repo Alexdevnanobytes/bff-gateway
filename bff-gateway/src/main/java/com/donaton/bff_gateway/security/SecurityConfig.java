@@ -32,6 +32,7 @@ public class SecurityConfig {
                                 "/gateway/usuarios/registro",
                                 "/gateway/centros/**", // CORREGIDO: Eliminado "/usuarios" para que coincida con el Controller
                                 "/gateway/donaciones/**",
+                                "/gateway/necesidades/**",
                                 "/actuator/**"
                         ).permitAll()
                         .anyRequest().authenticated()

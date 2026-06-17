@@ -23,6 +23,34 @@ class DonacionGatewayControllerTest {
     }
 
     @Test
+    void debeListarDonacionesPorUsuarioDesdeGateway() {
+        DonacionFacade facade = mock(DonacionFacade.class);
+        DonacionGatewayController controller = new DonacionGatewayController(facade);
+
+        Object respuesta = new Object();
+
+        when(facade.listarDonacionesPorUsuario(3L)).thenReturn(respuesta);
+
+        Object resultado = controller.listarDonacionesPorUsuario(3L);
+
+        assertSame(respuesta, resultado);
+    }
+
+    @Test
+    void debeObtenerDonacionDesdeGateway() {
+        DonacionFacade facade = mock(DonacionFacade.class);
+        DonacionGatewayController controller = new DonacionGatewayController(facade);
+
+        Object respuesta = new Object();
+
+        when(facade.obtenerDonacion(9L)).thenReturn(respuesta);
+
+        Object resultado = controller.obtenerDonacion(9L);
+
+        assertSame(respuesta, resultado);
+    }
+
+    @Test
     void debeCrearDonacionDesdeGateway() {
         DonacionFacade facade = mock(DonacionFacade.class);
         DonacionGatewayController controller = new DonacionGatewayController(facade);

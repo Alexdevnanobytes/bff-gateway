@@ -7,40 +7,40 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class DonacionClientTest {
+class NecesidadClientTest {
 
     @Test
-    void debeCrearDonacion() {
+    void debeCrearNecesidad() {
         RestTemplate restTemplate = mock(RestTemplate.class);
-        DonacionClient client = new DonacionClient(restTemplate);
+        NecesidadClient client = new NecesidadClient(restTemplate);
 
-        ReflectionTestUtils.setField(client, "donacionesUrl", "http://localhost:8082");
+        ReflectionTestUtils.setField(client, "necesidadesUrl", "http://localhost:8083");
 
         Object dto = new Object();
         Object respuesta = new Object();
 
         when(restTemplate.postForObject(
-                "http://localhost:8082/api/donaciones",
+                "http://localhost:8083/api/necesidades",
                 dto,
                 Object.class
         )).thenReturn(respuesta);
 
-        Object resultado = client.crearDonacion(dto);
+        Object resultado = client.crearNecesidad(dto);
 
         assertSame(respuesta, resultado);
     }
 
     @Test
-    void debeListarDonaciones() {
+    void debeListarNecesidades() {
         RestTemplate restTemplate = mock(RestTemplate.class);
-        DonacionClient client = new DonacionClient(restTemplate);
+        NecesidadClient client = new NecesidadClient(restTemplate);
 
-        ReflectionTestUtils.setField(client, "donacionesUrl", "http://localhost:8082");
+        ReflectionTestUtils.setField(client, "necesidadesUrl", "http://localhost:8083");
 
         Object respuesta = new Object();
 
         when(restTemplate.getForObject(
-                "http://localhost:8082/api/donaciones",
+                "http://localhost:8083/api/necesidades",
                 Object.class
         )).thenReturn(respuesta);
 
@@ -50,16 +50,16 @@ class DonacionClientTest {
     }
 
     @Test
-    void debeObtenerDonacionPorId() {
+    void debeObtenerNecesidadPorId() {
         RestTemplate restTemplate = mock(RestTemplate.class);
-        DonacionClient client = new DonacionClient(restTemplate);
+        NecesidadClient client = new NecesidadClient(restTemplate);
 
-        ReflectionTestUtils.setField(client, "donacionesUrl", "http://localhost:8082");
+        ReflectionTestUtils.setField(client, "necesidadesUrl", "http://localhost:8083");
 
         Object respuesta = new Object();
 
         when(restTemplate.getForObject(
-                "http://localhost:8082/api/donaciones/1",
+                "http://localhost:8083/api/necesidades/1",
                 Object.class
         )).thenReturn(respuesta);
 
@@ -69,39 +69,39 @@ class DonacionClientTest {
     }
 
     @Test
-    void debeListarDonacionesPorUsuario() {
+    void debeListarPorEstado() {
         RestTemplate restTemplate = mock(RestTemplate.class);
-        DonacionClient client = new DonacionClient(restTemplate);
+        NecesidadClient client = new NecesidadClient(restTemplate);
 
-        ReflectionTestUtils.setField(client, "donacionesUrl", "http://localhost:8082");
+        ReflectionTestUtils.setField(client, "necesidadesUrl", "http://localhost:8083");
 
         Object respuesta = new Object();
 
         when(restTemplate.getForObject(
-                "http://localhost:8082/api/donaciones/usuario/12",
+                "http://localhost:8083/api/necesidades/estado/PENDIENTE",
                 Object.class
         )).thenReturn(respuesta);
 
-        Object resultado = client.listarPorUsuario(12L);
+        Object resultado = client.listarPorEstado("PENDIENTE");
 
         assertSame(respuesta, resultado);
     }
 
     @Test
-    void debeListarCentros() {
+    void debeListarPorRegion() {
         RestTemplate restTemplate = mock(RestTemplate.class);
-        DonacionClient client = new DonacionClient(restTemplate);
+        NecesidadClient client = new NecesidadClient(restTemplate);
 
-        ReflectionTestUtils.setField(client, "donacionesUrl", "http://localhost:8082");
+        ReflectionTestUtils.setField(client, "necesidadesUrl", "http://localhost:8083");
 
         Object respuesta = new Object();
 
         when(restTemplate.getForObject(
-                "http://localhost:8082/api/centros",
+                "http://localhost:8083/api/necesidades/region/Biobio",
                 Object.class
         )).thenReturn(respuesta);
 
-        Object resultado = client.listarCentros();
+        Object resultado = client.listarPorRegion("Biobio");
 
         assertSame(respuesta, resultado);
     }
