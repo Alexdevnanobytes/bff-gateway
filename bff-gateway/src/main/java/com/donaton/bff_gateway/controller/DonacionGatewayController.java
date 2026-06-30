@@ -28,7 +28,10 @@ public class DonacionGatewayController {
     }
 
     // 3. NUEVO: Listar donaciones de un USUARIO específico (GET)
+<<<<<<< HEAD
+=======
     // Este es el endpoint que usa tu página "Mis Donaciones"
+>>>>>>> b72499bb6489d2c1f2568c89e7f2bd8660ad7b6f
     @GetMapping("/donaciones/usuario/{id}")
     public Object listarDonacionesPorUsuario(@PathVariable Long id) {
         return donacionFacade.listarDonacionesPorUsuario(id);
@@ -40,6 +43,15 @@ public class DonacionGatewayController {
         return donacionFacade.obtenerDonacion(id);
     }
 
+<<<<<<< HEAD
+    // 🌟 NUEVO: Cambiar el estado de una donación específica (PUT)
+    @PutMapping("/donaciones/{id}/estado")
+    public Object actualizarEstado(@PathVariable Long id, @RequestBody Object estadoDto) {
+        return donacionFacade.actualizarEstado(id, estadoDto);
+    }
+
+=======
+>>>>>>> b72499bb6489d2c1f2568c89e7f2bd8660ad7b6f
     // 5. Listar todos los centros de acopio (GET)
     @GetMapping("/centros")
     public Object listarCentros() {
