@@ -1,7 +1,6 @@
 package com.donaton.bff_gateway.controller;
 
 import com.donaton.bff_gateway.facade.DonacionFacade;
-import com.donaton.bff_gateway.dto.EstadoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,8 @@ public class DonacionGatewayController {
         return donacionFacade.listarDonaciones();
     }
 
-    // 3. Listar donaciones de un USUARIO específico (GET)
+    // 3. NUEVO: Listar donaciones de un USUARIO específico (GET)
+    // Este es el endpoint que usa tu página "Mis Donaciones"
     @GetMapping("/donaciones/usuario/{id}")
     public Object listarDonacionesPorUsuario(@PathVariable Long id) {
         return donacionFacade.listarDonacionesPorUsuario(id);
@@ -44,11 +44,5 @@ public class DonacionGatewayController {
     @GetMapping("/centros")
     public Object listarCentros() {
         return donacionFacade.listarCentros();
-    }
-
-    // 🚀 MODIFICADO: Ahora recibe de forma estricta el EstadoDTO para que no se pierda el JSON
-    @PutMapping("/donaciones/{id}/estado")
-    public Object actualizarEstadoDonacion(@PathVariable Long id, @RequestBody EstadoDTO payload) {
-        return donacionFacade.actualizarEstadoDonacion(id, payload);
     }
 }

@@ -2,10 +2,6 @@ package com.donaton.bff_gateway.client;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,6 +29,7 @@ public class DonacionClient {
         );
     }
 
+    // MÉTODO AGREGADO: Para buscar donaciones de un usuario específico
     public Object listarPorUsuario(Long id) {
         return restTemplate.getForObject(
                 donacionesUrl + "/api/donaciones/usuario/" + id,
@@ -52,20 +49,5 @@ public class DonacionClient {
                 donacionesUrl + "/api/centros",
                 Object.class
         );
-    }
-
-    // 🚀 MODIFICADO: Ahora usa exchange() enviando las cabeceras JSON obligatorias para MySQL
-    public Object actualizarEstado(Long id, Object dto) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<Object> entity = new HttpEntity<>(dto, headers);
-
-        return restTemplate.exchange(
-                donacionesUrl + "/api/donaciones/" + id + "/estado",
-                HttpMethod.PUT,
-                entity,
-                Object.class
-        ).getBody();
     }
 }

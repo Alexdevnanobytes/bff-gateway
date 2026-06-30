@@ -24,6 +24,21 @@ class UsuarioGatewayControllerTest {
     }
 
     @Test
+    void debeRegistrarUsuarioDesdeGateway() {
+        DonacionFacade facade = mock(DonacionFacade.class);
+        UsuarioGatewayController controller = new UsuarioGatewayController(facade);
+
+        Object dto = new Object();
+        Object respuesta = new Object();
+
+        when(facade.registrar(dto)).thenReturn(respuesta);
+
+        Object resultado = controller.registrar(dto);
+
+        assertSame(respuesta, resultado);
+    }
+
+    @Test
     void debeObtenerUsuarioDesdeGateway() {
         DonacionFacade facade = mock(DonacionFacade.class);
         UsuarioGatewayController controller = new UsuarioGatewayController(facade);
@@ -33,6 +48,21 @@ class UsuarioGatewayControllerTest {
         when(facade.obtenerUsuario(1L)).thenReturn(respuesta);
 
         Object resultado = controller.obtenerUsuario(1L);
+
+        assertSame(respuesta, resultado);
+    }
+
+    @Test
+    void debeActualizarUsuarioDesdeGateway() {
+        DonacionFacade facade = mock(DonacionFacade.class);
+        UsuarioGatewayController controller = new UsuarioGatewayController(facade);
+
+        Object dto = new Object();
+        Object respuesta = new Object();
+
+        when(facade.actualizarUsuario(4L, dto)).thenReturn(respuesta);
+
+        Object resultado = controller.actualizarUsuario(4L, dto);
 
         assertSame(respuesta, resultado);
     }

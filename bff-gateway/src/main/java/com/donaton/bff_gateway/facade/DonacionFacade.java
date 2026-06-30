@@ -3,12 +3,9 @@ package com.donaton.bff_gateway.facade;
 import com.donaton.bff_gateway.client.DonacionClient;
 import com.donaton.bff_gateway.client.UsuarioClient;
 import com.donaton.bff_gateway.dto.ErrorResponseDTO;
-import com.donaton.bff_gateway.dto.EstadoDTO;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +48,7 @@ public class DonacionFacade {
         return donacionClient.listar();
     }
 
+    // NUEVO: Método para obtener donaciones filtradas por ID de usuario
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object listarDonacionesPorUsuario(Long id) {
         return donacionClient.listarPorUsuario(id);
@@ -64,13 +62,6 @@ public class DonacionFacade {
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object listarCentros() {
         return donacionClient.listarCentros();
-    }
-
-    // 🚀 MODIFICADO: Tipado con EstadoDTO para mantener consistencia en la red
-    @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
-    public Object actualizarEstadoDonacion(Long id, EstadoDTO dto) {
-        donacionClient.actualizarEstado(id, dto);
-        return Map.of("mensaje", "Estado actualizado con éxito en el microservicio");
     }
 
     // --- MÉTODOS FALLBACK (Resiliencia) ---
