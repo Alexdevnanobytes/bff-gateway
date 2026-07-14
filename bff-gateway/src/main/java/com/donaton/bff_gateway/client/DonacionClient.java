@@ -1,14 +1,12 @@
 package com.donaton.bff_gateway.client;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-<<<<<<< HEAD
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-=======
->>>>>>> b72499bb6489d2c1f2568c89e7f2bd8660ad7b6f
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
@@ -49,7 +47,6 @@ public class DonacionClient {
         );
     }
 
-<<<<<<< HEAD
     // 🌟 NUEVO MÉTODO ADAPTADO: Actualiza el estado mediante un PUT que retorna el objeto modificado
     public Object actualizarEstado(Long id, Object estadoDto) {
         HttpEntity<Object> requestEntity = new HttpEntity<>(estadoDto);
@@ -62,8 +59,6 @@ public class DonacionClient {
         ).getBody();
     }
 
-=======
->>>>>>> b72499bb6489d2c1f2568c89e7f2bd8660ad7b6f
     public Object listarCentros() {
         return restTemplate.getForObject(
                 donacionesUrl + "/api/centros",

@@ -1,11 +1,13 @@
 package com.donaton.bff_gateway.facade;
 
+import org.springframework.stereotype.Service;
+
 import com.donaton.bff_gateway.client.DonacionClient;
 import com.donaton.bff_gateway.client.UsuarioClient;
 import com.donaton.bff_gateway.dto.ErrorResponseDTO;
+
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +50,7 @@ public class DonacionFacade {
         return donacionClient.listar();
     }
 
-<<<<<<< HEAD
-=======
     // NUEVO: Método para obtener donaciones filtradas por ID de usuario
->>>>>>> b72499bb6489d2c1f2568c89e7f2bd8660ad7b6f
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object listarDonacionesPorUsuario(Long id) {
         return donacionClient.listarPorUsuario(id);
@@ -62,15 +61,12 @@ public class DonacionFacade {
         return donacionClient.obtener(id);
     }
 
-<<<<<<< HEAD
-    // 🌟 NUEVO: Puente hacia el cliente Feign con protección de Circuit Breaker
+    // 🌟 NUEVO: Puente hacia el cliente RestTemplate con protección de Circuit Breaker
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object actualizarEstado(Long id, Object estadoDto) {
         return donacionClient.actualizarEstado(id, estadoDto);
     }
 
-=======
->>>>>>> b72499bb6489d2c1f2568c89e7f2bd8660ad7b6f
     @CircuitBreaker(name = "ms-donaciones", fallbackMethod = "fallbackDonaciones")
     public Object listarCentros() {
         return donacionClient.listarCentros();
